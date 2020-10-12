@@ -27,33 +27,33 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="PC的物理地址空间 PC的物理地址空间布局如下图所示：  早期的16位PC只能支持1MB的物理内存，因此软件只能使用0x00000000 ~ 0x00A00000 之间的640KB内存。 在286及以后的CPU中，尽管支持了超过1MB的内存，但是为了保持软件的向后兼容性，这种内存布局依然被保留了下来。 所以，直到今天，PC的地址空间上依然保存着一个从0x00A00000 ~ 0x00100000的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/a.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/b.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/c.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/d.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/e.jpg">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/f.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/i.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/j.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/g.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/h.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/k.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/l.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/m.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/n.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/o.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/p.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/q.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/r.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/s.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/u.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/t.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/v.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/a.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/b.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/c.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/d.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/e.jpg">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/f.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/i.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/j.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/g.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/h.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/k.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/l.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/m.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/n.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/o.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/p.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/q.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/r.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/s.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/u.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/t.png">
+<meta property="og:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/v.png">
 <meta property="article:published_time" content="2020-10-04T07:30:12.000Z">
-<meta property="article:modified_time" content="2020-10-11T14:36:59.089Z">
+<meta property="article:modified_time" content="2020-10-12T02:30:26.803Z">
 <meta property="article:author" content="lv">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/lab1-Booting-a-PC/a.png">
+<meta name="twitter:image" content="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/a.png">
 
 <link rel="canonical" href="https://lllllv.github.io/2020/10/04/lab1-Booting-a-PC/">
 
@@ -203,7 +203,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-11 22:36:59" itemprop="dateModified" datetime="2020-10-11T22:36:59+08:00">2020-10-11</time>
+                <time title="修改时间：2020-10-12 10:30:26" itemprop="dateModified" datetime="2020-10-12T10:30:26+08:00">2020-10-12</time>
               </span>
 
           
@@ -219,13 +219,13 @@
       
         <h2 id="PC的物理地址空间"><a href="#PC的物理地址空间" class="headerlink" title="PC的物理地址空间"></a>PC的物理地址空间</h2><hr>
 <p>PC的物理地址空间布局如下图所示：</p>
-<p><img src="lab1-Booting-a-PC/a.png" alt="img"></p>
+<p><img src="a.png" alt="img"></p>
 <p>早期的16位PC只能支持1MB的物理内存，因此软件只能使用0x00000000 ~ 0x00A00000 之间的640KB内存。</p>
 <p>在286及以后的CPU中，尽管支持了超过1MB的内存，但是为了保持软件的向后兼容性，这种内存布局依然被保留了下来。</p>
 <p>所以，直到今天，PC的地址空间上依然保存着一个从0x00A00000 ~ 0x00100000的空洞。</p>
 <h2 id="The-ROM-BIOS"><a href="#The-ROM-BIOS" class="headerlink" title="The ROM BIOS"></a>The ROM BIOS</h2><hr>
 <p>在两个终端上分别运行 <code>make qemu-nox-gdb</code> 和 <code>gdb</code> 命令，可以看到：</p>
-<p><img src="lab1-Booting-a-PC/b.png" alt="img"></p>
+<p><img src="b.png" alt="img"></p>
 <p>第一条指令从0xffff0（即为BIOS保留的64KB的地址空间内部）处开始执行，并且是一个ljmp指令。</p>
 <p>可是当PC启动，内存刚加电时，内存中应该都是些无意义的数据才对啊？那0xffff0处的指令是哪来的？</p>
 <p>事实上，CPU对于一些特殊地址，如地址0xffff0的访问会被芯片组转发到BIOS芯片中，而非物理内存访问。</p>
@@ -243,21 +243,21 @@
 <p>尽管这种访问0x0ffef之前地址的方式显得特别蠢，但是还真有一些程序这么干了…</p>
 <p>但是，当Intel推出了新的CPU，支持了超过20根地址线的寻址方式的时候，问题就出现了。CPU可分辨不出到底程序是想访问0x0ffef，还是真的想访问0x10ffef。因此，为了兼容以前的程序，Intel决定在CPU启动的时候，默认将A20置0，这样旧的程序还能接着使用；而新的程序，如果想使用超过1MB的空间，就得先以某种特定的方式启用A20地址线了，也正是那段代码要做的事。</p>
 <p>如果查阅相关资料的话，会发现，代码中的0x60，0x64端口明明是键盘控制器端口啊，怎么又跟地址线扯上关系了？这就又牵扯到另外一个历史遗留问题了。当初Intel那帮人设计启用A20的方式的时候，发现键盘控制器那里刚好多出来了一位，结果就正好拿来用了…</p>
-<p>从0x7c1e开始的这段代码将CPU从实模式转为保护模式。<strong>注意：从这里开始，boot.asm文件就出现了反汇编解析错误的情况。</strong> 比如，这里<br><img src="lab1-Booting-a-PC/c.png" alt="img"></p>
+<p>从0x7c1e开始的这段代码将CPU从实模式转为保护模式。<strong>注意：从这里开始，boot.asm文件就出现了反汇编解析错误的情况。</strong> 比如，这里<br><img src="c.png" alt="img"></p>
 <p>右边的反汇编代码就已经解析错误了，实际应该为 <code>0f 01 16 64 7c</code> 是一条指令（lgdtw 0x7c64）， <code>0f 20 c0</code> 是一条指令（mov %cr0, %eax）。</p>
-<p>所以，最好还是在GDB中一步步查看汇编代码。正确的代码应该是：<br><img src="lab1-Booting-a-PC/d.png" alt="img"></p>
+<p>所以，最好还是在GDB中一步步查看汇编代码。正确的代码应该是：<br><img src="d.png" alt="img"></p>
 <p>其中，0x7c64指定了一个地址，从这里开始的6个字节存储了GDT表的信息。 <strong>由于操作数(0x7c64)是一个16位的地址</strong> ，就代表了低两个字节为GDT表的大小，再高三个字节表示了GDT表的地址(24bit)，最高的一个字节是无用的。如果操作数是32位，则就是另外一种情况了。<em>（我猜测是因为Intel首次在80286的机器中引入了保护模式，有了GDT表，而286只有24位地址线，所以才有了这种规定。）</em> 详细可以参考<a target="_blank" rel="noopener" href="https://c9x.me/x86/html/file_module_x86_id_156.html">这篇文档</a>。</p>
 <p>接着，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov %cr0, %eax</span><br><span class="line">or  $0x1, %eax</span><br><span class="line">mov %eax, %cr0</span><br></pre></td></tr></table></figure>
 <p>这三条指令将cr0寄存器的最低位置1，开启保护模式。</p>
-<p><img src="lab1-Booting-a-PC/e.jpg" alt="img"></p>
+<p><img src="e.jpg" alt="img"></p>
 <p>在开启了保护模式之后，CPU就不再以CS*16+IP的方式寻址了，而是通过段选择子查描述符表，找到段基址，以段基址+偏移量寻址，这就是前面开启保护模式前要先加载GDT的原因。</p>
 <p>既然进入了保护模式，CS寄存器就装载了段选择子，那自然就要 用新的值来代替。在进入保护模式前，CS寄存器的值是0x0，如果不修改的话，就不能有效寻址了。所以，就要用<code>ljmp 0x8, 0x7c32</code>指令，将CS寄存器设置正确的段选择子（0x8），而EIP设置为下一条指令的地址。</p>
-<p>如图，CS寄存器段的内容是0x8，代表应该查GDT表段的第1个条目。根据GDB的信息，有理由猜测这个条目的段基地址应该为0x0.<br><img src="lab1-Booting-a-PC/f.png" alt="img"></p>
-<p>事实上，查阅最原始的汇编文件boot.s，会发现，上面的那条<code>lgdtw</code>汇编指令是<code>lgdtw gdtdesc</code>：<br><img src="lab1-Booting-a-PC/i.png" alt="img"></p>
-<p>加载gdtdesc段的地址，位于汇编文件的最末尾地方：<br><img src="lab1-Booting-a-PC/j.png" alt="img"></p>
+<p>如图，CS寄存器段的内容是0x8，代表应该查GDT表段的第1个条目。根据GDB的信息，有理由猜测这个条目的段基地址应该为0x0.<br><img src="f.png" alt="img"></p>
+<p>事实上，查阅最原始的汇编文件boot.s，会发现，上面的那条<code>lgdtw</code>汇编指令是<code>lgdtw gdtdesc</code>：<br><img src="i.png" alt="img"></p>
+<p>加载gdtdesc段的地址，位于汇编文件的最末尾地方：<br><img src="j.png" alt="img"></p>
 <p>在这里，我们找到了gdt表的内容。可以清楚的看到，code段的基地址正是0x0，与之前的猜测一致（SEG宏的定义可以查看头文件mmu.h）。</p>
-<p>接着，用0x10（代表描述符表段第二个条目）初始化几个段寄存器，并设置栈指针为0x7c00，然后调用bootmain函数。<br><img src="lab1-Booting-a-PC/g.png" alt="img"></p>
+<p>接着，用0x10（代表描述符表段第二个条目）初始化几个段寄存器，并设置栈指针为0x7c00，然后调用bootmain函数。<br><img src="g.png" alt="img"></p>
 <h3 id="对main-c的分析"><a href="#对main-c的分析" class="headerlink" title="对main.c的分析"></a>对main.c的分析</h3><p>main.c对应了上面的bootmain函数。在main.c中有几个函数，接下来对这些函数进行分析。</p>
 <p>首先是<code>waitdisk()</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void</span><br><span class="line">waitdisk(void)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; wait for disk reaady</span><br><span class="line">    while ((inb(0x1F7) &amp; 0xC0) !&#x3D; 0x40)</span><br><span class="line">        &#x2F;* do nothing *&#x2F;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -284,7 +284,7 @@
 <blockquote>
 <p>What is the last instruction of the boot loader executed, and what is the first instruction of the kernel it just loaded?</p>
 </blockquote>
-<p>bootloader最后执行的指令是call *0x10018，即调用0x10018处的函数指针，也就是内核的入口点。事实上，根据上面的wiki，ELF头的入口点字段的偏移量正是0x18，加上ELF头的基地址0x10000，正是0x10018。在<code>call *0x10018</code>处设置断点，执行到这里时，使用<code>x/1x 0x10018</code>查看此处的内容，如图<br><img src="lab1-Booting-a-PC/h.png" alt="img"></p>
+<p>bootloader最后执行的指令是call *0x10018，即调用0x10018处的函数指针，也就是内核的入口点。事实上，根据上面的wiki，ELF头的入口点字段的偏移量正是0x18，加上ELF头的基地址0x10000，正是0x10018。在<code>call *0x10018</code>处设置断点，执行到这里时，使用<code>x/1x 0x10018</code>查看此处的内容，如图<br><img src="h.png" alt="img"></p>
 <p>可以看到，内核的入口点地址是0x10000c。在这里设置一个断点，第一条指令是一个movw指令。查看/kern/entry.s，第一条指令正是这条指令，说明我们的分析是正确的。</p>
 <blockquote>
 <p>Where is the first instruction of the kernel?</p>
@@ -296,26 +296,26 @@
 <p>通过查看ELFHDR-&gt;e_phnum获得program header的数量，使用for循环将依次访问这些program header，得到内核各个段需要加载到的内存地址，以及段的大小，然后使用readseg将这些段从磁盘载入到内存。</p>
 <h2 id="Loading-the-Kernel"><a href="#Loading-the-Kernel" class="headerlink" title="Loading the Kernel"></a>Loading the Kernel</h2><hr>
 <p>这一小节前面的内容比较简单，就不细说了。直接跳到Exercise 5.</p>
-<h3 id="Exercise-5"><a href="#Exercise-5" class="headerlink" title="Exercise 5"></a>Exercise 5</h3><p>先将Makefrag中的0x7c00改成0x7f00，再重新编译，可以看到，新的bootloader的link address已经变成0x7f00了：<br><img src="lab1-Booting-a-PC/k.png" alt="img"></p>
+<h3 id="Exercise-5"><a href="#Exercise-5" class="headerlink" title="Exercise 5"></a>Exercise 5</h3><p>先将Makefrag中的0x7c00改成0x7f00，再重新编译，可以看到，新的bootloader的link address已经变成0x7f00了：<br><img src="k.png" alt="img"></p>
 <p>接下来，实地执行一下。</p>
-<p>经过一番实际操作，bootloader并没有在0x7f00处开始执行。相反，BIOS依然将bootloader装载到了0x7c00，并从这里开始执行：<br><img src="lab1-Booting-a-PC/l.png" alt="img"></p>
+<p>经过一番实际操作，bootloader并没有在0x7f00处开始执行。相反，BIOS依然将bootloader装载到了0x7c00，并从这里开始执行：<br><img src="l.png" alt="img"></p>
 <p>可见BIOS还是比较死板的…</p>
 <p>可是这样问题就出现了。因为链接器“以为”这段程序将从0x7f00处开始执行，那一些地址计算——基地址+偏移量——这些就完全错误了。还记得上面提到的<code>lgdtw gdtdesc</code>吗？gdtdsec的地址，在链接的时候，得到的是0x7c64。</p>
-<p>现在Makefrag里面将link address改为了0x7f00，那链接器在计算地址的时候，自然就是成了0x7f64了。这就跟实际情况对不上了。BIOS将bootloader放到了0x7c00处，gdtdsec实际上是在0x7c64处的，而查看GDB：<br><img src="lab1-Booting-a-PC/m.png" alt="img"></p>
+<p>现在Makefrag里面将link address改为了0x7f00，那链接器在计算地址的时候，自然就是成了0x7f64了。这就跟实际情况对不上了。BIOS将bootloader放到了0x7c00处，gdtdsec实际上是在0x7c64处的，而查看GDB：<br><img src="m.png" alt="img"></p>
 <p>它竟然尝试将0x7f64处的内容加载进GDT寄存器中，而内存的0x7f64处内容全为0！当然，在<code>lgdtw</code>那条指令执行的时候，程序还不会崩溃——直到执行<code>ljmp</code>指令。这时，CPU查GDT表，想要计算出要跳转到的地址时，就出错了。</p>
-<p><img src="lab1-Booting-a-PC/n.png" alt="img"></p>
+<p><img src="n.png" alt="img"></p>
 <p>可以看到，在执行<code>ljmp</code>指令后，qemu报告了错误triple fault（三振出局，常由GDT表或LDT表错误产生）。</p>
 <h3 id="Exercise-5-1"><a href="#Exercise-5-1" class="headerlink" title="Exercise 5"></a>Exercise 5</h3><p>这个也非常简单，看一下就行了。在刚进入bootloader的时候，0x100000处全是0，在进入内核之后，必然就不是0了，因为内核的.text节正是被装载到了这里。</p>
-<p><img src="lab1-Booting-a-PC/o.png" alt="img"></p>
+<p><img src="o.png" alt="img"></p>
 <h2 id="Part-3-The-Kernel"><a href="#Part-3-The-Kernel" class="headerlink" title="Part 3: The Kernel"></a>Part 3: The Kernel</h2><hr>
 <h3 id="对entry-S的分析"><a href="#对entry-S的分析" class="headerlink" title="对entry.S的分析"></a>对entry.S的分析</h3><p>内核代码链接地址却设置的是0xf0100000，而bootloader将其装载到了物理地址0x00100000（上图），显然如果想要正确执行代码，就要进行一些地址转换。</p>
 <p>在通常情况下这些地址转换是通过查询页表来进行的，但是在刚进入内核的时候，这些虚拟内存机制还未建立起来，因此，在设置好虚拟内存之前，需要临时手动对一些地址进行转换。</p>
-<p><img src="lab1-Booting-a-PC/p.png" alt="img"></p>
+<p><img src="p.png" alt="img"></p>
 <p>由于在链接时，链接器需要根据全局符号_start，获得程序正确的入口地址，所以，可以看到，标记内核的入口点的全局符号_start的值被设置成了entry处的地址减去0xf0000000的值。</p>
 <p>entry.S首先做的是把一个临时页表基址加载进cr3寄存器中，然后修改cr0寄存器来开启内存分页。此后，就不再需要使用RELOC宏进行手工地址修改了。</p>
 <p>随后，将设置$ebp为0，同时设置$esp，进入i386_init.</p>
 <h3 id="Exercise-7"><a href="#Exercise-7" class="headerlink" title="Exercise 7"></a>Exercise 7</h3><p>经过上面的分析，这部分就比较简单了。</p>
-<p><img src="lab1-Booting-a-PC/q.png" alt="img"></p>
+<p><img src="q.png" alt="img"></p>
 <p>在执行<code>mov %eax,%cr0</code>前，0xf0100000的地址与0x100000地址处的内容是不同的，而执行完这一条语句后，开启了虚拟内存，这两个地址被映射到了同一个物理地址，因此查看这两个地址处的内容，得到的结果是相同的。</p>
 <h3 id="Exercise-8"><a href="#Exercise-8" class="headerlink" title="Exercise 8"></a>Exercise 8</h3><p>这部分也非常简单。参考输出无符号十进制数时的情况，把base从10改成8就行了</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">case &#39;o&#39;:</span><br><span class="line">    &#x2F;&#x2F; Replace this with your code.</span><br><span class="line">	num &#x3D; getuint(&amp;ap, lflag);</span><br><span class="line">	base &#x3D; 8;</span><br><span class="line">	goto number;</span><br></pre></td></tr></table></figure>
@@ -352,17 +352,17 @@
 </blockquote>
 <p>首先考虑如果这种情况真的发生了，会有什么结果。<br>正常情况下，从右向左进栈，最后进的第一个参数，也就是格式字符串。尽管参数数目是可变的，但只要访问位于栈顶的格式字符串，自然就知道，到底有多少个参数了。</p>
 <p>如果改成了从左向右进栈，格式字符串第一个进栈，那么显然实现可变参数的宏的实现也要变，即va_start va_arg等。</p>
-<h3 id="Exercise-9"><a href="#Exercise-9" class="headerlink" title="Exercise 9"></a>Exercise 9</h3><p>打开gdb，在设置栈指针esp处设置断点<br><img src="lab1-Booting-a-PC/r.png" alt="img"><br>可以看到，使用了0xf0110000来初始化栈指针。另外，查看inc/memlayout.h头文件，可以看到</p>
-<p><img src="lab1-Booting-a-PC/s.png" alt="img"></p>
+<h3 id="Exercise-9"><a href="#Exercise-9" class="headerlink" title="Exercise 9"></a>Exercise 9</h3><p>打开gdb，在设置栈指针esp处设置断点<br><img src="r.png" alt="img"><br>可以看到，使用了0xf0110000来初始化栈指针。另外，查看inc/memlayout.h头文件，可以看到</p>
+<p><img src="s.png" alt="img"></p>
 <p>内核栈的大小是8个页大小，也就是32KB，分布在0xf0108000～0xf0110000。</p>
 <h3 id="Exercise-10"><a href="#Exercise-10" class="headerlink" title="Exercise 10"></a>Exercise 10</h3><p>这是一个无聊的exercise，跳过。</p>
 <h3 id="Exercise-11"><a href="#Exercise-11" class="headerlink" title="Exercise 11"></a>Exercise 11</h3><p>这个exercise要求实现前面讲到的backtrace的功能。题目中已经给了提示，使用read_ebp()函数。</p>
 <p>x86函数调用的过程是先把函数参数压栈，再把返回地址压栈，接着修改eip，进入新的函数。进入新的函数时，首先创建栈帧，将旧的ebp压栈，将当前的esp的值赋给ebp。关于栈帧的详细解释可以看<a target="_blank" rel="noopener" href="https://juejin.im/post/6844903616524845063">这篇文章</a>。</p>
 <p>因此，思路就是首先读取ebp，然后，ebp+4的地方存的就是返回地址，而再往上就是压进的参数。显然，仅仅根据这些信息是很难确定每一个函数调用的参数个数的，所以题目中要求是展示出5个参数，不用管实际有多少个。然后，读取ebp指向的内存地址处的值，这也就是保存的先前的ebp的值。用这个值更新ebp的值，直到函数调用栈的底部。回想一下，entry.S中，进入内核时，ebp的值设置的是0，所以，循环体的到ebp是0的时候，停止。整个代码是：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cprintf(&quot;Stack backtrace:\n&quot;);</span><br><span class="line">uint32_t ebp&#x3D;read_ebp();</span><br><span class="line">while(ebp!&#x3D;0)</span><br><span class="line">&#123;</span><br><span class="line">	cprintf(&quot;  ebp %08x  eip %08x  args %08x %08x %08x %08x %08x\n&quot;,</span><br><span class="line">	ebp, *((int*)(ebp+4)), *((int*)(ebp+8)), *((int*)(ebp+12)), </span><br><span class="line">	*((int*)(ebp+16)), *((int*)(ebp+20)), *((int*)(ebp+24)));</span><br><span class="line"></span><br><span class="line">	ebp&#x3D;*(int*)ebp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果<br><img src="lab1-Booting-a-PC/u.png" alt="img"></p>
+<p>运行结果<br><img src="u.png" alt="img"></p>
 <p>使用<code>make grade</code>来检验一下正确性。</p>
-<p><img src="lab1-Booting-a-PC/t.png" alt="img"></p>
+<p><img src="t.png" alt="img"></p>
 <p>exercise 11 要求的内容都完成了，接下来，进入exercise 12，继续完善backtrace功能。</p>
 <h3 id="Exercise-12"><a href="#Exercise-12" class="headerlink" title="Exercise 12"></a>Exercise 12</h3><p>exercise12要求进一步完善显示的backtrace信息。根据问题描述，在函数<code>mon_backtrace</code>中需要调用<code>debuginfo_eip</code>来获得一个Eipdebuginfo结构体，其中保存来当前栈帧返回地址所在函数的一些信息。然后，使用cprintf将这些信息打印出来就行了。那么，新的mon_backtrace是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">mon_backtrace(int argc, char **argv, struct Trapframe *tf)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F; Your code here.</span><br><span class="line">	struct Eipdebuginfo info;</span><br><span class="line">	cprintf(&quot;Stack backtrace:\n&quot;);</span><br><span class="line">	uint32_t ebp&#x3D;read_ebp(),eip;</span><br><span class="line">	while(ebp!&#x3D;0)</span><br><span class="line">	&#123;</span><br><span class="line">		eip&#x3D;*((int*)(ebp+4));</span><br><span class="line">		cprintf(&quot;  ebp %08x  eip %08x  args %08x %08x %08x %08x %08x\n&quot;,</span><br><span class="line">		ebp, eip , *((int*)(ebp+8)), *((int*)(ebp+12)), </span><br><span class="line">		*((int*)(ebp+16)), *((int*)(ebp+20)), *((int*)(ebp+24)));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		debuginfo_eip(eip,&amp;info);</span><br><span class="line"></span><br><span class="line">		cprintf(&quot;         %s:%d: %.*s+%d\n&quot;,</span><br><span class="line">		info.eip_file,info.eip_line,info.eip_fn_namelen</span><br><span class="line">		,info.eip_fn_name,eip-info.eip_fn_addr);</span><br><span class="line">		</span><br><span class="line">		ebp&#x3D;*(int*)ebp;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -375,7 +375,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static struct Command commands[] &#x3D; &#123;</span><br><span class="line">	&#123; &quot;help&quot;, &quot;Display this list of commands&quot;, mon_help &#125;,</span><br><span class="line">	&#123; &quot;kerninfo&quot;, &quot;Display information about the kernel&quot;, mon_kerninfo &#125;,</span><br><span class="line">	&#123; &quot;backtrace&quot;, &quot;backtrace&quot;, mon_backtrace&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>至此，便全部完成了。</p>
 <p>运行<code>make grade</code>进行评分</p>
-<p><img src="lab1-Booting-a-PC/v.png" alt="img"></p>
+<p><img src="v.png" alt="img"></p>
 <p>至此，lab1全部完成。</p>
 
     </div>
