@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lllllv.github.io/2020/10/29/lab2-Memory-Management/a.png">
 <meta property="article:published_time" content="2020-10-29T02:39:39.000Z">
-<meta property="article:modified_time" content="2020-11-01T03:46:48.577Z">
+<meta property="article:modified_time" content="2020-11-01T04:18:40.556Z">
 <meta property="article:author" content="lv">
 <meta property="article:tag" content="MIT 6.828">
 <meta name="twitter:card" content="summary">
@@ -188,7 +188,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-01 11:46:48" itemprop="dateModified" datetime="2020-11-01T11:46:48+08:00">2020-11-01</time>
+                <time title="修改时间：2020-11-01 12:18:40" itemprop="dateModified" datetime="2020-11-01T12:18:40+08:00">2020-11-01</time>
               </span>
 
           
@@ -208,7 +208,7 @@
 <p>首先是<code>boot_alloc()</code>。该函数用于分配一些连续的物理页，需要的空间大小由参数给出。注意到，函数中一个重要的变量是<code>static char *nextfree</code>，它指向下一个可用的页。它在内核被装载到内存中的时候被初始化为0（static），然后在这个函数首次运行的时候被初始化为虚拟内存空间中紧接着内核之后的那个空闲地址（当然，它是4k对齐的）。同时，由于它是static类型的，每次函数运行之后，它的值被更新，然后在下次被调用，再次被更新，以此类推…</p>
 <p>函数要求分配一些物理页，乍一看这个“分配”无从下手，因为现在既没有页表也没有什么别的帮助函数，但是回想一下，在lab1中，我们知道在进入内核入口点的时候已经加载了一个临时的页目录表<code>entry_pgdir</code>，它将0xf0000000 ~ 0xf0400000之间的地址直接映射到物理地址0x00000000 ~ 0x00400000，而现在<code>next_free</code>指向虚拟地址空间中内核后面的空闲地址，那么它指向的内容也会被直接映射到物理地址中（只要没超过0xf0400000）。那么，这个“分配”就只要返回一个虚拟地址就行了，映射的事情是不必管的。</p>
 <p><code>boot_alloc()</code>的注释中已经说明了，参数代表期望分配的字节数，但既然分配的粒度是以“页”为单位，那么就需要向上取整了，而如果空间不够了则要panic，当然这个“空间不够”也是指的是0xf0000000 ~ 0xf0400000之间的空闲页面被用尽了。另外，参数为0代表返回<code>next_free</code>的内容，不做分配。因此，函数需要补全的代码即为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">// LAB 2: Your code here.</span></span><br><span class="line"><span class="keyword">if</span>(n==<span class="number">0</span>)</span><br><span class="line">	<span class="keyword">return</span> nextfree;</span><br><span class="line">	</span><br><span class="line">result = nextfree;</span><br><span class="line"><span class="keyword">uint32_t</span> require = n/PGSIZE + (n % PGSIZE == <span class="number">0</span> ? <span class="number">0</span>:<span class="number">1</span>);</span><br><span class="line">nextfree += require * PGSIZE;</span><br><span class="line"><span class="keyword">if</span>((<span class="keyword">uint32_t</span>)nextfree&gt;=<span class="number">0xf0400000</span>)</span><br><span class="line">&#123;</span><br><span class="line">	panic(<span class="string">&quot;boot_alloc: Out of memory!\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">// LAB 2: Your code here.</span></span><br><span class="line"><span class="keyword">if</span>(n==<span class="number">0</span>)</span><br><span class="line">	<span class="keyword">return</span> nextfree;</span><br><span class="line">	</span><br><span class="line">result = nextfree;</span><br><span class="line"><span class="keyword">uint32_t</span> require = n / PGSIZE + (n % PGSIZE == <span class="number">0</span> ? <span class="number">0</span>:<span class="number">1</span>);</span><br><span class="line">nextfree += require * PGSIZE;</span><br><span class="line"><span class="keyword">if</span>((<span class="keyword">uint32_t</span>)nextfree &gt;= <span class="number">0xf0400000</span>)</span><br><span class="line">&#123;</span><br><span class="line">	panic(<span class="string">&quot;boot_alloc: Out of memory!\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
 
 <p>接下来是<code>mem_init()</code>，要求只需要完成到调用<code>check_page_free_list(1)</code>之前到部分即可。</p>
 <p>在<code>mem_init()</code>中，首先，调用<code>i386_detect_memory()</code>来探测物理内存的大小，然后才能着手建立页表。使用boot_alloc()分配了一个物理页给<code>kern_pgdir</code>来做页目录表，并把这个页初始化为0，接着插入一个表项:<code>kern_pgdir[PDX(UVPT)] = PADDR(kern_pgdir) | PTE_U | PTE_P</code>，至于这个表项什么意思现在不必弄清，之后用到的时候还会说。然后，就到了要求完成代码到地方，要求是分配一个含<code>npages</code>个元素的<code>struct PageInfo</code>数组<code>pages</code>，用于创建一个与每一个物理页的一一对应，初始化为0.这个还是很简单的，代码如下</p>
@@ -270,7 +270,10 @@
     <a href="/2020/10/24/Homework-shell/" rel="prev" title="Homework:shell">
       <i class="fa fa-chevron-left"></i> Homework:shell
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/05/lab3-User-Environments/" rel="next" title="lab3:User Environments">
+      lab3:User Environments <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -343,7 +346,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
