@@ -201,15 +201,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Part-A-User-Environments-and-Exception-Handling"><a href="#Part-A-User-Environments-and-Exception-Handling" class="headerlink" title="Part A: User Environments and Exception Handling"></a>Part A: User Environments and Exception Handling</h2><h3 id="Exercise-1"><a href="#Exercise-1" class="headerlink" title="Exercise 1"></a>Exercise 1</h3><p>在exercise 1中，要求分配一个<code>envs</code>数组，并将其映射到虚拟地址空间中的<code>UENVS</code>处。这个工作非常简单，对着上一个实验中的照猫画虎就行了，代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">envs = (struct Env*)boot_alloc(NENV * <span class="keyword">sizeof</span>(struct Env));</span><br><span class="line"><span class="built_in">memset</span>(envs, <span class="number">0</span>, NENV * <span class="keyword">sizeof</span>(struct Env));</span><br></pre></td></tr></table></figure>
+        <h2 id="part-a-user-environments-and-exception-handling">Part A: User Environments and Exception Handling</h2>
+<h3 id="exercise-1">Exercise 1</h3>
+<p>在exercise 1中，要求分配一个<code>envs</code>数组，并将其映射到虚拟地址空间中的<code>UENVS</code>处。这个工作非常简单，对着上一个实验中的照猫画虎就行了，代码如下 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">envs = (struct Env*)boot_alloc(NENV * <span class="keyword">sizeof</span>(struct Env));</span><br><span class="line"><span class="built_in">memset</span>(envs, <span class="number">0</span>, NENV * <span class="keyword">sizeof</span>(struct Env));</span><br></pre></td></tr></table></figure></p>
+<p>在分配了空间之后，在pmap.c中建立虚拟内存之后的部分加入将其映射到<code>UENVS</code>处的代码 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boot_map_region(kern_pgdir, UENVS, NENV * <span class="keyword">sizeof</span>(struct Env), PADDR(envs), PTE_U | PTE_P);</span><br></pre></td></tr></table></figure></p>
+<p><span class="math display">\[\begin{equation}\label{eq1}
+e=mc^2
+\end{equation}\]</span></p>
+<h3 id="exercise-2">Exercise 2</h3>
 
-<p>在分配了空间之后，在pmap.c中建立虚拟内存之后的部分加入将其映射到<code>UENVS</code>处的代码</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boot_map_region(kern_pgdir, UENVS, NENV * <span class="keyword">sizeof</span>(struct Env), PADDR(envs), PTE_U | PTE_P);</span><br></pre></td></tr></table></figure>
-
-
-<p>$$\begin{equation}\label{eq1}<br>e=mc^2<br>\end{equation}$$</p>
-<h3 id="Exercise-2"><a href="#Exercise-2" class="headerlink" title="Exercise 2"></a>Exercise 2</h3>
     </div>
 
     
@@ -289,7 +289,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-A-User-Environments-and-Exception-Handling"><span class="nav-number">1.</span> <span class="nav-text">Part A: User Environments and Exception Handling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-1"><span class="nav-number">1.1.</span> <span class="nav-text">Exercise 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-2"><span class="nav-number">1.2.</span> <span class="nav-text">Exercise 2</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#part-a-user-environments-and-exception-handling"><span class="nav-number">1.</span> <span class="nav-text">Part A: User Environments and Exception Handling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exercise-1"><span class="nav-number">1.1.</span> <span class="nav-text">Exercise 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exercise-2"><span class="nav-number">1.2.</span> <span class="nav-text">Exercise 2</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -392,6 +392,8 @@
 
 
 
+
+  
 
   
 
