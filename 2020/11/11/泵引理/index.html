@@ -20,29 +20,22 @@
     var CONFIG = {"hostname":"lllllv.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="MIT 6.828 homework1">
+  <meta name="description" content="正则语言及上下文无关语言的泵引理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Homework:boot xv6">
-<meta property="og:url" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/index.html">
+<meta property="og:title" content="泵引理">
+<meta property="og:url" content="https://lllllv.github.io/2020/11/11/%E6%B3%B5%E5%BC%95%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="MIT 6.828 homework1">
+<meta property="og:description" content="正则语言及上下文无关语言的泵引理">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/a.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/b.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/c.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/d.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/e.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/f.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/g.png">
-<meta property="og:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/b.png">
-<meta property="article:published_time" content="2020-10-12T09:09:13.000Z">
-<meta property="article:modified_time" content="2020-10-12T11:50:31.663Z">
+<meta property="og:image" content="https://lllllv.github.io/2020/11/11/%E6%B3%B5%E5%BC%95%E7%90%86/a.png">
+<meta property="article:published_time" content="2020-11-11T12:41:45.000Z">
+<meta property="article:modified_time" content="2020-11-11T13:44:53.655Z">
 <meta property="article:author" content="lv">
-<meta property="article:tag" content="MIT 6.828">
+<meta property="article:tag" content="计算理论">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/a.png">
+<meta name="twitter:image" content="https://lllllv.github.io/2020/11/11/%E6%B3%B5%E5%BC%95%E7%90%86/a.png">
 
-<link rel="canonical" href="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/">
+<link rel="canonical" href="https://lllllv.github.io/2020/11/11/%E6%B3%B5%E5%BC%95%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -55,7 +48,7 @@
   };
 </script>
 
-  <title>Homework:boot xv6 | Hexo</title>
+  <title>泵引理 | Hexo</title>
   
 
 
@@ -169,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lllllv.github.io/2020/10/12/Homework-boot-xv6/">
+    <link itemprop="mainEntityOfPage" href="https://lllllv.github.io/2020/11/11/%E6%B3%B5%E5%BC%95%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -182,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Homework:boot xv6
+          泵引理
         </h1>
 
         <div class="post-meta">
@@ -193,11 +186,11 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-10-12 17:09:13 / 修改时间：19:50:31" itemprop="dateCreated datePublished" datetime="2020-10-12T17:09:13+08:00">2020-10-12</time>
+              <time title="创建时间：2020-11-11 20:41:45 / 修改时间：21:44:53" itemprop="dateCreated datePublished" datetime="2020-11-11T20:41:45+08:00">2020-11-11</time>
             </span>
 
           
-            <div class="post-description">MIT 6.828 homework1</div>
+            <div class="post-description">正则语言及上下文无关语言的泵引理</div>
 
         </div>
       </header>
@@ -208,30 +201,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>首先使用nm命令寻找内核的入口点：</p>
+        <p>根据正则语言的定义</p>
+<blockquote>
+<p>如果一个语言被一台有穷自动机识别，则称它是正则语言。</p>
+</blockquote>
+<p>那么，判断一个语言是不是正则语言，便可以看它是否有可能有一台与之对应的有穷自动机。例如，对于语言 $B$ ，设</p>
+<p>$$B=\lbrace0^n1^n\vert\ n\geqslant0\rbrace$$</p>
+<p>如果分析一下的话，会发现，想要找到一台有穷自动机识别它的话，是不可能的。由于“0”的个数和“1”的个数必须相等，那么这台自动机便不得不记住前面已经“吃掉”的“0”的个数，然后再根据后续输入的“1”的个数来决定识别与否。但是别忘了这台自动机是有穷的。想要一台有穷的自动机记住无限制的“0”的个数是不可能的，由此，我们便判断，语言B不是正则语言。</p>
+<p>然而，仅仅根据定义判断一个语言是否是正则的，有时候是十分困难的。例如，考虑下面两个语言 $C$ 、$D$ ：</p>
+<p>$$C=\lbrace\omega\vert\ \omega中0和1的个数相等 \rbrace$$</p>
+<p>$$D=\lbrace\omega\vert\ \omega中01和10作为子串出现的次数相等 \rbrace$$</p>
+<p>依照上面的思路，这两个语言都应该是非正则的。然而，事实却是，$C$ 不是正则的，而 $D$ 却是正则的。可见，仅仅是主观上的臆测，有时候是非常不靠谱的。这就引出了下面要讲的，也就是文章的正题——正则语言的泵引理(Pumping lemma for regular languages)。</p>
+<hr>
+<p>正则语言的泵引理描述了所有正则语言必不可少的一个特性。如果我们能够证明某个语言不存在这个特性，那么我们便可以断定，这个语言是非正则的。这个特性就是：<strong>任意一个足够长的，属于某个正则语言的字符串，其中都存在某个长度不为0的子串，在这个字符串中将这个子串重复任意次所得到的字符串，依然属于这个正则语言</strong>。</p>
+<p>形式化的来说，就是：<br>若 $L$ 是一个正则语言，那么存在一个数(泵长度) $p$ ，使得对于 $L$ 中任意一个长度不小于 $p$ 的字符串 $\omega$ ，都可以写为 $\omega=xyz$ ，并满足以下条件：</p>
+<ul>
+<li><p>$$\lvert y\geqslant1\rvert$$</p>
+</li>
+<li><p>$$\lvert xy\leqslant p\rvert$$</p>
+</li>
+<li><p>$$(\forall n\geqslant0)(xy^nz\in L )$$</p>
+</li>
+</ul>
+<p>泵长度 $p$ 仅取决于语言 $L$ 。 $\omega$ 被分成三个部分 $x$ ，$y$ ，$z$ 时，$x$ ，$z$ 可以为空串 $\epsilon$ ，但 $y$ 不行。</p>
+<p>形式化的证明这里就不展开了，那种东西既冗长又无趣，维基百科上便有。这里主要讲一下它的形象一些的证明思想。</p>
+<p>根据正则语言的定义，如果一个语言 $L$ 是正则语言，那么一定存在着一台有穷自动机 $M$ 识别它。考虑一下这个有穷自动机。我们令泵长度 $p$ 为 $M$ 的状态数，则 $L$ 中任意长度不小于 $p$ 的字符串 $ω$（姑且设为 $n$ ），经过的状态序列的长度是 $n+1$，其中 $n$ 大于等于 $p$。那么根据抽屉原理，这个长度为 $n+1$ 的状态序列中，必然有两个状态是相同的，而这两个相同的状态，最迟最迟也会在序列的第 $p+1$ 个处出现，就像下面这幅图所展示的一样：</p>
 <p><img src="a.png" alt="img"></p>
-<p>在这里，内核的入口点是0x10000c。在lab1中，其实也看到了，jos的内核入口点也是0x10000c，这并不奇怪，因为jos也是基于xv6开发的。</p>
-<p>在内核入口点处设置断点，并查看此处的寄存器信息和栈中的内容：</p>
-<p><img src="b.png" alt="img"></p>
-<p>下P面对栈中对内容进行分析。</p>
-<p>0x10000c是内核的入口点，如果想要弄清楚这时栈中的内容的含义，那么自然要分析之前的代码都干了什么，也就是bootloader的内容。</p>
-<p>那么，回到最初的位置，在bootblock.asm的初始化%esp之后，调用bootmain之前设置断点,并查看相同地方的内容（0x7bdc）：</p>
-<p><img src="c.png" alt="img"></p>
-<p>当前，esp指向的是0x7c00，可以看到自它以下（栈从高地址向低地址增长）的内容全为0。</p>
-<p>在call bootmain之后，再次查看相同地方的内容：</p>
-<p><img src="d.png" alt="img"></p>
-<p>可以看到0x7bfc处的内容被写入了“0x7c4d”，也就是<code>call   7d3b &lt;bootmain&gt;</code> 之后下一条语句的地址。</p>
-<p>在进入了bootmain之后，进行了修改ebp，保存寄存器现场，分配局部变量等一系列栈操作：</p>
-<p><img src="e.png" alt="img"></p>
-<p>在进入bootmain时打一个断点：</p>
-<p><img src="f.png" alt="img"></p>
-<p>在0x7d50处：</p>
-<p><img src="g.png" alt="img"></p>
-<p>可以看到，从0x7bd4处开始的内容，正是压入栈的那三个局部变量，而再往后就是进入bootmain后保存的寄存器环境。</p>
-<p>之后，bootmain会通过一系列循环来把内核从磁盘加载进内存中，一步步分析这部分是毫无意义的，只需要关注于最后的结果。</p>
-<p>再回过头来看之前的结果，</p>
-<p><img src="b.png" alt="img"></p>
-<p>0x7bdc处之前是0x00000000，而现在变成了<code>call   *0x10018</code>指令的下一条指令的地址，这是栈分配的局部变量使用完毕，分配的栈空间被回收，然后，call指令执行后压栈返回地址的结果。其余的内容刚才也已经分析完毕。</p>
+<p>在这幅图中，$q_s$ 是序列中第 $s$ 个状态，$q_t$ 是序列中第 $t$ 个状态，这两个状态是同一个状态（抽屉原理），那么我们把 $q_s$ 和 $q_t$ 之间的那个序列，所对应的子串(也就是上面的 $y$ )拿出来，重复 $n$ 次，最后这个字符串必然也一样能够被这个有穷自动机所识别，它在 $q_s$ 和 $q_t$ 这两个相同的状态之间转了 $n$ 圈，最终被识别。我们甚至可以把 $q_s$ 和 $q_t$ 之间对应的子串拿掉（也就是 $n$ 为0)，它也一样会被识别！<br>道理很简单，对不对？下面通过两个例子来说一下如何通过泵引理来证明一个语言不是正则的。</p>
+<p>例子1.</p>
+<p>设$F=\lbrace\omega\omega\vert\ \omega\in \lbrace0,1\rbrace^{*} \rbrace$.证明$F$不是正则的。</p>
+<p>首先，假设 $F$ 是正则的，设 $p$ 是它的泵长度，那么字符串 $s=0^p10^p1$ 显然是属于 $F$  的。根据泵引理,$s=xyz$ ，而其中的 $y$ ，肯定出现在 $0^p$ 中的。在这个情况下，把 $y$ 重复哪怕一次，所得到的字符串都不可能被 $F$ 识别，因此，这个语言不是正则的。</p>
+<p>例子2.</p>
+<p>设 $G=\lbrace0^i1^j\vert\ i&gt;j\rbrace$.证明 $G$ 不是正则的。</p>
+<p>跟上面一样，先假设 $G$ 是正则的，设 $p$ 是它的泵长度，令字符串 $s=0^{p+1}1^p$ .乍一看，它是正则的，因为把出现在 $0^{p+1}$ 中的那个 $y$ 重复任意次，得到的字符串也会被 $G$ 识别。但是，别忘了泵引理要求 $y$ 不但能够重复任意次，还要能够拿掉它！$y$ 的长度不为0，只要我们尝试拿掉 $y$ ，所得的字符串都将不能满足 $G$ 的要求，因此，$G$ 也不是正则的。</p>
+<p>（未完）</p>
 
     </div>
 
@@ -241,7 +244,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/MIT-6-828/" rel="tag"># MIT 6.828</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E7%90%86%E8%AE%BA/" rel="tag"># 计算理论</a>
           </div>
 
         
@@ -250,13 +253,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/04/lab1-Booting-a-PC/" rel="prev" title="lab1:Booting a PC">
-      <i class="fa fa-chevron-left"></i> lab1:Booting a PC
+    <a href="/2020/11/05/lab3-User-Environments/" rel="prev" title="lab3:User Environments">
+      <i class="fa fa-chevron-left"></i> lab3:User Environments
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/10/24/Homework-shell/" rel="next" title="Homework:shell">
-      Homework:shell <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -421,6 +421,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
