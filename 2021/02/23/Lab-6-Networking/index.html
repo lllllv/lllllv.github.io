@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lllllv.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MIT 6.828 Lab6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lab 6: Networking">
+<meta property="og:url" content="https://lllllv.github.io/2021/02/23/Lab-6-Networking/index.html">
+<meta property="og:site_name" content="Lv的杂货铺">
+<meta property="og:description" content="MIT 6.828 Lab6">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lllllv.github.io/2021/02/23/Lab-6-Networking/a.png">
+<meta property="og:image" content="https://lllllv.github.io/2021/02/23/Lab-6-Networking/a.png">
+<meta property="article:published_time" content="2021-02-23T03:04:30.000Z">
+<meta property="article:modified_time" content="2021-02-27T09:53:33.926Z">
+<meta property="article:author" content="lv">
+<meta property="article:tag" content="MIT 6.828">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lllllv.github.io/2021/02/23/Lab-6-Networking/a.png">
+
+<link rel="canonical" href="https://lllllv.github.io/2021/02/23/Lab-6-Networking/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Lab 6: Networking | Lv的杂货铺</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lv的杂货铺</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们都是阴沟里的虫子，但总还是得有人仰望星空</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lllllv.github.io/2021/02/23/Lab-6-Networking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lv">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lv的杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Lab 6: Networking
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 11:04:30" itemprop="dateCreated datePublished" datetime="2021-02-23T11:04:30+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-27 17:53:33" itemprop="dateModified" datetime="2021-02-27T17:53:33+08:00">2021-02-27</time>
+              </span>
+
+          
+            <div class="post-description">MIT 6.828 Lab6</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>lab 6是整个6.828课程的最后一个lab。据这个lab介绍，这个是最难的一个，但整体做下来来看，我个人感觉不是很难，且难度主要在看和理解文档上面。本次lab的内容是补全代码完成网卡的驱动程序。操作系统的TCP/IP协议栈是借用了一个轻量的开源实现，不必我们再动手写。qemu模拟器的虚拟网卡是Intel的E1000网卡。主要的参考文档是Intel的![]</p>
+<p>整体结构如下图所示，我们需要做的工作是完成绿色框对应的部分。</p>
+<p><img src="a.png" alt="img"></p>
+<h2 id="Part-A-Initialization-and-transmitting-packets"><a href="#Part-A-Initialization-and-transmitting-packets" class="headerlink" title="Part A: Initialization and transmitting packets"></a>Part A: Initialization and transmitting packets</h2><h3 id="Exercise-1"><a href="#Exercise-1" class="headerlink" title="Exercise 1"></a>Exercise 1</h3><p>exercise 1要求在每个时钟中断到来时，在相应的中断处理逻辑处加上一个<code>time_tick()</code>函数调用。另外，完成一个系统调用<code>sys_time_msec()</code>来允许用户进程获取时间。</p>
+<p>在kern/syscall.c的<code>trap_dispatch()</code>的相应地方添加一个<code>time_tick()</code>函数调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(tf-&gt;tf_trapno == IRQ_OFFSET + IRQ_TIMER)</span><br><span class="line">&#123;</span><br><span class="line">	time_tick();</span><br><span class="line">	lapic_eoi();</span><br><span class="line">	sched_yield();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后实现<code>sys_time_msec()</code>并在<code>syscall()</code>中添加相应的分支：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Return the current time.</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">sys_time_msec(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// LAB 6: Your code here.</span></span><br><span class="line">	<span class="keyword">return</span> time_msec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> SYS_time_msec: </span><br><span class="line">	<span class="keyword">return</span> sys_time_msec();</span><br></pre></td></tr></table></figure>
+
+<p>E1000网卡是PCI设备。系统首先发现PCI总线上的设备，获得设备的信息，然后查<code>pci_attach_vendor</code>，如果获得的设备信息匹配上了一个条目，便调用相应的函数进行设备的初始化。</p>
+<h3 id="Exercise-3"><a href="#Exercise-3" class="headerlink" title="Exercise 3"></a>Exercise 3</h3><p>在exercise 3中，要求向<code>pci_attach_vendor</code>数组添加适合E1000网卡的相应条目，然后实现attach function来进行设备的初始化。</p>
+<p>首先向<code>pci_attach_vendor</code>数组添加相应的条目：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pci_attach_vendor matches the vendor ID and device ID of a PCI device. key1</span></span><br><span class="line"><span class="comment">// and key2 should be the vendor ID and device ID respectively</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pci_driver</span> <span class="title">pci_attach_vendor</span>[] = &#123;</span></span><br><span class="line">	&#123;(<span class="keyword">uint32_t</span>)<span class="number">0x8086</span>, (<span class="keyword">uint32_t</span>)<span class="number">0x100e</span>, &amp;attachfn&#125;,</span><br><span class="line">	&#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>而<code>attachfn()</code>是在e1000.c实现的。在现在，<code>attachfn()</code>中只需要添加对<code>pci_func_enable()</code>的调用即可。另外，还需要中在pci.c中添加e1000.h头文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// LAB 6: Your driver code here</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">attachfn</span><span class="params">(struct pci_func *pcif)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pci_func_enable(pcif);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>系统通过MMIO来与网卡进行通信。在之前的<code>attachfn()</code>中，<code>pci_func_enable()</code>已经与网卡协商好了一个MMIO区域并储存在BAR 0（即reg_base[0]和reg_size[0]），也就是说，对这个区域的物理地址的访问将被映射到网卡中。那么，需要使用<code>mmio_map_region()</code>创建一个映射从虚拟地址空间MMIO中一块相应区域到这片物理地址区域的映射。</p>
+<h3 id="Exercise-4"><a href="#Exercise-4" class="headerlink" title="Exercise 4"></a>Exercise 4</h3><p>在e1000.h中声明一个变量<code>volatile uint32_t * location;</code>并在<code>attachfn()</code>中添加相应功能：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">location = mmio_map_region(pcif-&gt;reg_base[<span class="number">0</span>], pcif-&gt;reg_size[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>此后，对网卡的各寄存器的访问，便可以转化成对（location + 偏移量）地址处的访问了。例如，查文档13.4.36节得知，TDBAL寄存器的偏移量是0x3800，那么也就是说，（location + 0x3800）地址处的4字节内容正是TDBAL寄存器的内容。在代码中，就是<code>*(location + 0x3800/4)</code>，因为location的类型是<code>uint32_t *</code>。</p>
+<p>由于直接写地址不易读且不易调试，更好的方法是定义一些列宏。lab页面给出了一个示例页面，我们可以使用其中的一些宏定义来使代码更加清晰：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TDBAL    0x03800  <span class="comment">/* TX Descriptor Base Address Low - RW */</span></span></span><br><span class="line"></span><br><span class="line">*(location + E1000_TDBAL/<span class="number">4</span>) = XXXXX;</span><br></pre></td></tr></table></figure>
+
+<p>在E1000中，数据包的传输是基于DMA的。驱动程序负责初始化两个队列：发送队列和接收队列，每个队列是一系列的发送/接收描述符。</p>
+<p>传送描述符的定义是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tx_desc</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">uint64_t</span> addr;</span><br><span class="line">	<span class="keyword">uint16_t</span> length;</span><br><span class="line">	<span class="keyword">uint8_t</span> cso;</span><br><span class="line">	<span class="keyword">uint8_t</span> cmd;</span><br><span class="line">	<span class="keyword">uint8_t</span> status;</span><br><span class="line">	<span class="keyword">uint8_t</span> css;</span><br><span class="line">	<span class="keyword">uint16_t</span> special;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中，addr是要发送的数据缓冲区的地址，它是一个物理地址，网卡通过DMA的方式读取到该地址处待发送的数据。如果要发送数据，则选择队列中一个空闲描述符，填入一系列信息并告知网卡，网卡会从发送队列中取得数据并发送；接收数据也是类似的原理。</p>
+<h3 id="Exercise-5"><a href="#Exercise-5" class="headerlink" title="Exercise 5"></a>Exercise 5</h3><p>exercise 5要求在驱动程序中完成transmit初始化的过程，参考上面的manual的14.5节。</p>
+<p>首先要做的是分配一块区域作为发送队列。队列是一系列的描述符，每个描述符的addr字段是相应的数据缓冲区，而这些数据缓冲区也是需要分配的。申请一个页面作为发送队列，根据提示，整个队列的描述符数量不应该超过64。对于每个描述符，也分配给它一个数据缓冲区，注意，缓冲区的地址是<strong>物理地址</strong>。此外，队列初始为空，那么初始化的时候，也要添加标志位<code>E1000_TXD_STAT_DD</code>，表示该描述符是空闲的。</p>
+<p>然后，根据文档，向网卡的一些寄存器填入适当的值：</p>
+<ul>
+<li><p>向TDBAL/TDBAH寄存器填入发送队列的物理地址；</p>
+</li>
+<li><p>向TDLEN寄存器填入发送队列的长度（字节数）；</p>
+</li>
+<li><p>确认TDT/TDH寄存器是0；</p>
+</li>
+<li><p>设置TCTL寄存器的一些位；</p>
+</li>
+<li><p>设置TIPG寄存器。</p>
+</li>
+</ul>
+<p>在e1000.h中声明传送描述符指针以及一些需要用到的宏定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">e1000_tx_desc</span>* <span class="title">trans_des</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TDBAL    0x03800  <span class="comment">/* TX Descriptor Base Address Low - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TDBAH    0x03804  <span class="comment">/* TX Descriptor Base Address High - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TDLEN    0x03808  <span class="comment">/* TX Descriptor Length - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TDH      0x03810  <span class="comment">/* TX Descriptor Head - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TDT      0x03818  <span class="comment">/* TX Descripotr Tail - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TCTL     0x00400  <span class="comment">/* TX Control - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TIPG     0x00410  <span class="comment">/* TX Inter-packet gap -RW */</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TCTL_EN     0x00000002    <span class="comment">/* enable tx */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TCTL_PSP    0x00000008    <span class="comment">/* pad short packets */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TXD_CMD_RS     0x08000000 <span class="comment">/* Report Status */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TXD_CMD_EOP    0x01000000 <span class="comment">/* End of Packet */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_TXD_STAT_DD    0x00000001 <span class="comment">/* Descriptor Done */</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transmit Descriptor */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">e1000_tx_desc</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint64_t</span> buffer_addr;       <span class="comment">/* Address of the descriptor&#x27;s data buffer */</span></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">uint32_t</span> data;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">            <span class="keyword">uint16_t</span> length;    <span class="comment">/* Data buffer length */</span></span><br><span class="line">            <span class="keyword">uint8_t</span> cso;        <span class="comment">/* Checksum offset */</span></span><br><span class="line">            <span class="keyword">uint8_t</span> cmd;        <span class="comment">/* Descriptor control */</span></span><br><span class="line">        &#125; flags;</span><br><span class="line">    &#125; lower;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">uint32_t</span> data;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">            <span class="keyword">uint8_t</span> status;     <span class="comment">/* Descriptor status */</span></span><br><span class="line">            <span class="keyword">uint8_t</span> css;        <span class="comment">/* Checksum start */</span></span><br><span class="line">            <span class="keyword">uint16_t</span> special;</span><br><span class="line">        &#125; fields;</span><br><span class="line">    &#125; upper;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>attachfn()</code>中添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">// trans init</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PageInfo</span> * <span class="title">p</span> = <span class="title">page_alloc</span>(1);</span></span><br><span class="line"><span class="keyword">if</span>(!p)</span><br><span class="line">    panic(<span class="string">&quot;trans des array page alloc failed in attachfn\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">uint32_t</span> trans_des_paddr = page2pa(p);</span><br><span class="line">trans_des = page2kva(p);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">64</span>; i ++)</span><br><span class="line">&#123;</span><br><span class="line">    p = page_alloc(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span>(!p)</span><br><span class="line">        panic(<span class="string">&quot;trans buffer page alloc failed in attachfn\n&quot;</span>);</span><br><span class="line">    trans_des[i].buffer_addr = page2pa(p);</span><br><span class="line">    trans_des[i].upper.data |= E1000_TXD_STAT_DD;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">*(location + E1000_TDBAL/<span class="number">4</span>) = trans_des_paddr;</span><br><span class="line">*(location + E1000_TDBAH/<span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line">*(location + E1000_TDLEN/<span class="number">4</span>) = <span class="number">64</span> * <span class="keyword">sizeof</span>(struct e1000_tx_desc);</span><br><span class="line">*(location + E1000_TDT/<span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line">*(location + E1000_TDH/<span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">*(location + E1000_TCTL/<span class="number">4</span>) = E1000_TCTL_EN | E1000_TCTL_PSP | <span class="number">0x40100</span>;</span><br><span class="line"></span><br><span class="line">*(location + E1000_TIPG/<span class="number">4</span>) = <span class="number">10</span> | <span class="number">10</span> &lt;&lt; <span class="number">10</span> | <span class="number">10</span> &lt;&lt; <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<p>接下来着手完成发送数据的功能。发送队列是一个循环队列，我们需要知道队列是否已满，如果满了，我们就只能把要发送的数据丢弃了。不过不用担心，网络协议栈在设计时就已经考虑了这个情况并确保了即使因为队列满导致数据包被丢弃，也不影响上层应用的正确运行。然而，文档中提到了，直接访问队头指针TDH可能得到不可信的数据，那么就需要一种不访问TDH也能知道队列是否已满的方法了。</p>
+<p>E1000提供了这样一个功能：在发送数据时，如果置了描述符的cmd字段的E1000_TXD_CMD_RS（Report Status）位，那么，网卡在成功将这个数据包发送出去后，会将这个描述符的status字段置E1000_TXD_STAT_DD（Descriptor Done）位，表示这个描述符现在是空闲的。那么，每次发送数据前，检查队尾的TDT指针，若它指向了一个被置E1000_TXD_STAT_DD字段的描述符，则可以使用这个描述符，否则，代表当前发送队列已满，丢弃数据并返回。</p>
+<h3 id="Exercise-6"><a href="#Exercise-6" class="headerlink" title="Exercise 6"></a>Exercise 6</h3><p>exercise 6正是要求写一个发送数据的函数。代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">send_packet</span><span class="params">(<span class="keyword">void</span>* content, <span class="keyword">uint32_t</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(trans_des[*(location + E1000_TDT/<span class="number">4</span>)].upper.data &amp; E1000_TXD_STAT_DD)</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">        trans_des[*(location + E1000_TDT/<span class="number">4</span>)].upper.data ^= E1000_TXD_STAT_DD;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">memcpy</span>(page2kva(pa2page(trans_des[*(location + E1000_TDT/<span class="number">4</span>)].buffer_addr)), content, size);</span><br><span class="line">        trans_des[*(location + E1000_TDT/<span class="number">4</span>)].lower.data |= E1000_TXD_CMD_RS;</span><br><span class="line">        trans_des[*(location + E1000_TDT/<span class="number">4</span>)].lower.data |= E1000_TXD_CMD_EOP;</span><br><span class="line">        trans_des[*(location + E1000_TDT/<span class="number">4</span>)].lower.flags.length = size;</span><br><span class="line"></span><br><span class="line">        *(location + E1000_TDT/<span class="number">4</span>) = (*(location + E1000_TDT/<span class="number">4</span>) + <span class="number">1</span>) % <span class="number">64</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码的逻辑还是比较清晰的，描述符的缓冲区地址字段是一个物理地址，而使用<code>memcpy()</code>拷贝要发送的数据使用的是虚拟地址，所以需要来回转化一下。另外，在这个lab中，一个描述符只用来传送一个数据包，不存在传输超大数据包以至于需要只用多个描述符的缓冲区才能装得下的情况，所以每个描述符都要置E1000_TXD_CMD_EOP（End Of Packet）位，否则，网卡在扫描到这个描述符时，会以为后面还有数据，导致虽然描述符被扫描到了，但是却没有数据被发送出去。</p>
+<h3 id="Exercise-7"><a href="#Exercise-7" class="headerlink" title="Exercise 7"></a>Exercise 7</h3><p>exercise 7要求实现一个系统调用接口以允许用户进程进行系统调用来发送一个数据包。</p>
+<p>首先，需要在lib/syscall.h中添加添加相应的枚举类型，然后在lib/syscall.c中添加相应实现来让用户进程可以调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">sys_packet_send(<span class="keyword">void</span>* content, <span class="keyword">uint32_t</span> len)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> syscall(SYS_packet_send, <span class="number">0</span>, (<span class="keyword">uint32_t</span>)content, len, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不要忘了在lib/inc.h中添加它的声明：<code>int sys_packet_send(void* content, uint32_t len);</code>。</p>
+<p>然后，在系统的内核部分添加处理这个请求的代码，在kern/syscall.c添加系统调用处理函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">sys_packet_send(<span class="keyword">void</span>* content, <span class="keyword">uint32_t</span> len)</span><br><span class="line">&#123;</span><br><span class="line">	user_mem_assert(curenv, content, len, PTE_U);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> send_packet(content, len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在kern/syscall.c的<code>syscall()</code>函数中添加相应分支：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> SYS_packet_send: </span><br><span class="line">	<span class="keyword">return</span> sys_packet_send((<span class="keyword">void</span>*)a1, a2);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Exercise-8"><a href="#Exercise-8" class="headerlink" title="Exercise 8"></a>Exercise 8</h3><p>exercise 8要求完成output.c中的内容。output.c对应了上面的整体结构图片中的output helper environment。它的功能是不断地从网络栈中获取要发送的数据（通过IPC接收），然后通过上面实现的系统调用将数据发送出去。代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">// LAB 6: Your code here:</span></span><br><span class="line">	<span class="comment">// 	- read a packet from the network server</span></span><br><span class="line">	<span class="comment">//	- send the packet to the device driver</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> r = ipc_recv(<span class="number">0</span>, &amp;nsipcbuf, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span>(r &lt; <span class="number">0</span>)</span><br><span class="line">		panic(<span class="string">&quot;output env ipc recv error:%e\n&quot;</span>, r);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	&#123;</span><br><span class="line">		r = sys_packet_send((<span class="keyword">void</span>*)nsipcbuf.pkt.jp_data, nsipcbuf.pkt.jp_len);</span><br><span class="line">		sys_yield();</span><br><span class="line">	&#125; <span class="keyword">while</span> (r &lt; <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><blockquote>
+<p>How did you structure your transmit implementation? In particular, what do you do if the transmit ring is full?</p>
+</blockquote>
+<p>上面已经提到了，如果发送队列已经满了的话，直接丢弃数据包并返回-1.网络栈会保证即使丢弃部分数据包也不影响上层通信的。</p>
+<h2 id="Part-B-Receiving-packets-and-the-web-server"><a href="#Part-B-Receiving-packets-and-the-web-server" class="headerlink" title="Part B: Receiving packets and the web server"></a>Part B: Receiving packets and the web server</h2><p>part b是接收数据包以及web服务器部分。</p>
+<h3 id="Exercise-10"><a href="#Exercise-10" class="headerlink" title="Exercise 10"></a>Exercise 10</h3><p>exercisse 10要求完成接收队列的初始化工作。这部分与上面的发送队列初始化有些类似，但又不一样。基本上也是参考Manual写，就不多说了，代码如下：</p>
+<p>在e1000.h中声明接收描述符指针以及一些需要用到的宏定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">e1000_rx_desc</span>* <span class="title">recv_des</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RDBAL    0x02800  <span class="comment">/* RX Descriptor Base Address Low - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RDBAH    0x02804  <span class="comment">/* RX Descriptor Base Address High - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RDLEN    0x02808  <span class="comment">/* RX Descriptor Length - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RDH      0x02810  <span class="comment">/* RX Descriptor Head - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RDT      0x02818  <span class="comment">/* RX Descriptor Tail - RW */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RA       0x05400  <span class="comment">/* Receive Address - RW Array */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RAH_AV  0x80000000        <span class="comment">/* Receive descriptor valid */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_MTA      0x05200  <span class="comment">/* Multicast Table Array - RW Array */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_IMS      0x000D0  <span class="comment">/* Interrupt Mask Set - RW */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL     0x00100  <span class="comment">/* RX Control - RW */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_EN             0x00000002    <span class="comment">/* enable */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_LPE            0x00000020    <span class="comment">/* long packet enable */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_LBM_NO         0x00000000    <span class="comment">/* no loopback mode */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_RDMTS_HALF     0x00000000    <span class="comment">/* rx desc min threshold size */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_BAM            0x00008000    <span class="comment">/* broadcast enable */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_BSEX           0x02000000    <span class="comment">/* Buffer size extension */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_SZ_4096        0x00030000    <span class="comment">/* rx buffer size 4096 */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RCTL_SECRC          0x04000000    <span class="comment">/* Strip Ethernet CRC */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E1000_RXD_STAT_DD       0x01    <span class="comment">/* Descriptor Done */</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Receive Descriptor */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">e1000_rx_desc</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint64_t</span> buffer_addr; <span class="comment">/* Address of the descriptor&#x27;s data buffer */</span></span><br><span class="line">    <span class="keyword">uint16_t</span> length;     <span class="comment">/* Length of data DMAed into data buffer */</span></span><br><span class="line">    <span class="keyword">uint16_t</span> csum;       <span class="comment">/* Packet checksum */</span></span><br><span class="line">    <span class="keyword">uint8_t</span> status;      <span class="comment">/* Descriptor status */</span></span><br><span class="line">    <span class="keyword">uint8_t</span> errors;      <span class="comment">/* Descriptor Errors */</span></span><br><span class="line">    <span class="keyword">uint16_t</span> special;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>attachfn()</code>中添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// recv init</span></span><br><span class="line"></span><br><span class="line">*(location + E1000_RA/<span class="number">4</span>) = <span class="number">0x12005452</span>;</span><br><span class="line">*(location + E1000_RA/<span class="number">4</span> + <span class="number">1</span>) = <span class="number">0x00005634</span>;		<span class="comment">/* MAC地址 */</span></span><br><span class="line"></span><br><span class="line">*(location + E1000_RA/<span class="number">4</span> + <span class="number">1</span>) |= E1000_RAH_AV;</span><br><span class="line">*(location + E1000_MTA/<span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line">*(location + E1000_IMS/<span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">p = page_alloc(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span>(!p)</span><br><span class="line">    panic(<span class="string">&quot;recv des array page alloc failed in attachfn\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">uint32_t</span> recv_des_paddr = page2pa(p);</span><br><span class="line">recv_des = page2kva(p);</span><br><span class="line"></span><br><span class="line">*(location + E1000_RDBAL/<span class="number">4</span>) = recv_des_paddr;</span><br><span class="line">*(location + E1000_RDBAH/<span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line">*(location + E1000_RDLEN/<span class="number">4</span>) = <span class="number">128</span> * <span class="keyword">sizeof</span>(struct e1000_rx_desc);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">128</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    p = page_alloc(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span>(!p)</span><br><span class="line">        panic(<span class="string">&quot;recv buffer page alloc failed in attachfn\n&quot;</span>);</span><br><span class="line">    recv_des[i].buffer_addr = page2pa(p);</span><br><span class="line">    recv_des[i].length = <span class="number">4096</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">*(location + E1000_RDH/<span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line">*(location + E1000_RDT/<span class="number">4</span>) = <span class="number">127</span>;</span><br><span class="line"></span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) |= E1000_RCTL_EN;</span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) ^= E1000_RCTL_LPE;</span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) |= E1000_RCTL_LBM_NO;</span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) |= E1000_RCTL_RDMTS_HALF;</span><br><span class="line"><span class="comment">// MO ignored</span></span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) |= E1000_RCTL_BAM;</span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) |= E1000_RCTL_BSEX;</span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) |= E1000_RCTL_SZ_4096;</span><br><span class="line">*(location + E1000_RCTL/<span class="number">4</span>) |= E1000_RCTL_SECRC;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Exercise-11"><a href="#Exercise-11" class="headerlink" title="Exercise 11"></a>Exercise 11</h3><p>exercise 11也是一样的，实现一个接收数据的函数，并实现相应的系统调用提供给用户进程使用。也是跟上面的非常类似，所以也就略过一些头文件声明或者枚举类型定义之类的东西了，完整的代码可以在我的GitHub上找到。</p>
+<p>在e1000.c中添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">recv_packet</span><span class="params">(<span class="keyword">void</span>* buf, <span class="keyword">uint32_t</span>* size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(recv_des[(*(location + E1000_RDT/<span class="number">4</span>) + <span class="number">1</span>) % <span class="number">128</span>].status &amp; E1000_RXD_STAT_DD)</span><br><span class="line">    &#123;</span><br><span class="line">        *(location + E1000_RDT/<span class="number">4</span>) = (*(location + E1000_RDT/<span class="number">4</span>) + <span class="number">1</span>) % <span class="number">128</span>;</span><br><span class="line">        recv_des[*(location + E1000_RDT/<span class="number">4</span>)].status ^= E1000_RXD_STAT_DD;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!size)</span><br><span class="line">            panic(<span class="string">&quot;nullptr cannot be used in fn-recv_packet\n&quot;</span>);</span><br><span class="line">        *size = recv_des[*(location + E1000_RDT/<span class="number">4</span>)].length;</span><br><span class="line">        <span class="built_in">memcpy</span>(buf, page2kva(pa2page(recv_des[*(location + E1000_RDT/<span class="number">4</span>)].buffer_addr)), *size);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在lib/syscall.c中添加下面的函数使得用户进程可以调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> </span><br><span class="line">sys_packet_recv(<span class="keyword">void</span>* buf, <span class="keyword">uint32_t</span>* size)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> syscall(SYS_packet_recv, <span class="number">0</span>, (<span class="keyword">uint32_t</span>)buf, (<span class="keyword">uint32_t</span>)size, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在kern/syscall.c中添加系统调用处理函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> </span><br><span class="line">sys_packet_recv(<span class="keyword">void</span>* buf, <span class="keyword">uint32_t</span>* size)</span><br><span class="line">&#123;</span><br><span class="line">	user_mem_assert(curenv, buf, PGSIZE - <span class="keyword">sizeof</span>(<span class="keyword">int</span>), PTE_U);</span><br><span class="line">	<span class="keyword">return</span> recv_packet(buf, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后在kern/syscall.c的<code>syscall()</code>中添加相应的分支：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> SYS_packet_recv: </span><br><span class="line">	<span class="keyword">return</span> sys_packet_recv((<span class="keyword">void</span>*)a1, (<span class="keyword">uint32_t</span>*)a2);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Exercise-12"><a href="#Exercise-12" class="headerlink" title="Exercise 12"></a>Exercise 12</h3><p>exercise 12也是同样类似，完成input helper environment中的内容。唯一的区别是，这里是通过IPC的方法将从网卡接收到的数据发送给网络栈，那么网络栈的进程不一定能够立即取出IPC传递过去的页的数据，这需要一段时间，所以，在IPC消息发送出去后，立即将相同的页用于放下一个数据包的IPC信息可能导致错误。所以，这里采用两个页交替使用的方法，第一个包使用P1，第二个使用P2，第三个使用P1…等等。</p>
+<p>代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">// LAB 6: Your code here:</span></span><br><span class="line">	<span class="comment">// 	- read a packet from the device driver</span></span><br><span class="line">	<span class="comment">//	- send it to the network server</span></span><br><span class="line">	<span class="comment">// Hint: When you IPC a page to the network server, it will be</span></span><br><span class="line">	<span class="comment">// reading from it for a while, so don&#x27;t immediately receive</span></span><br><span class="line">	<span class="comment">// another packet in to the same physical page.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> r = sys_page_alloc(<span class="number">0</span>, (<span class="keyword">void</span> *)PKTMAP0, PTE_U|PTE_W|PTE_P);</span><br><span class="line"><span class="keyword">if</span> (r &lt; <span class="number">0</span>)</span><br><span class="line">	panic(<span class="string">&quot;fn-input: could not allocate page of memory&quot;</span>);</span><br><span class="line"></span><br><span class="line">r = sys_page_alloc(<span class="number">0</span>, (<span class="keyword">void</span> *)PKTMAP1, PTE_U|PTE_W|PTE_P);</span><br><span class="line"><span class="keyword">if</span> (r &lt; <span class="number">0</span>)</span><br><span class="line">	panic(<span class="string">&quot;fn-input: could not allocate page of memory&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">jif_pkt</span> *<span class="title">pkt0</span> = (<span class="title">struct</span> <span class="title">jif_pkt</span> *)<span class="title">PKTMAP0</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">jif_pkt</span> *<span class="title">pkt1</span> = (<span class="title">struct</span> <span class="title">jif_pkt</span> *)<span class="title">PKTMAP1</span>;</span></span><br><span class="line"><span class="keyword">uint32_t</span> size0, size1, t = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(t++ % <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		r = sys_packet_recv(pkt0-&gt;jp_data, &amp;size0);</span><br><span class="line">		<span class="keyword">if</span>(!r)</span><br><span class="line">		&#123;</span><br><span class="line">			pkt0-&gt;jp_len = size0;</span><br><span class="line">			ipc_send(ns_envid, NSREQ_INPUT, (<span class="keyword">void</span>*)pkt0, PTE_P|PTE_W|PTE_U);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		r = sys_packet_recv(pkt1-&gt;jp_data, &amp;size1);</span><br><span class="line">		<span class="keyword">if</span>(!r)</span><br><span class="line">		&#123;</span><br><span class="line">			pkt1-&gt;jp_len = size1;</span><br><span class="line">			ipc_send(ns_envid, NSREQ_INPUT, (<span class="keyword">void</span>*)pkt1, PTE_P|PTE_W|PTE_U);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Question-1"><a href="#Question-1" class="headerlink" title="Question"></a>Question</h3><blockquote>
+<p>How did you structure your receive implementation? In particular, what do you do if the receive queue is empty and a user environment requests the next incoming packet?</p>
+</blockquote>
+<p>如果没有新的数据包的话，系统调用会返回-1，并不会传递数据。</p>
+<h3 id="Exercise-13"><a href="#Exercise-13" class="headerlink" title="Exercise 13"></a>Exercise 13</h3><p>最后一个exercise要求完成web服务器的两个函数：<code>send_file()</code>和<code>send_data()</code>。</p>
+<p><code>send_file()</code>要做的是打开http请求的url字段请求的资源，并且取得该文件的大小，并把文件发送出去，比较简单，代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">// LAB 6: Your code here.</span></span><br><span class="line"></span><br><span class="line">fd = open(req-&gt;url, O_RDONLY);</span><br><span class="line"><span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">	send_error(req, <span class="number">404</span>);</span><br><span class="line">	<span class="keyword">goto</span> end;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Stat</span> <span class="title">stat</span>;</span></span><br><span class="line">fstat(fd, &amp;stat);</span><br><span class="line"><span class="keyword">if</span>(stat.st_isdir)</span><br><span class="line">&#123;</span><br><span class="line">	send_error(req, <span class="number">404</span>);</span><br><span class="line">	<span class="keyword">goto</span> end;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">file_size = stat.st_size;</span><br></pre></td></tr></table></figure>
+
+<p><code>send_data()</code>要做的就是将相应文件描述符对应的文件的内容发送给http请求方，同样也很简单：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">// LAB 6: Your code here.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span>* buf = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="number">32</span>);</span><br><span class="line"><span class="keyword">int</span> len;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">	len = read(fd, buf, <span class="number">32</span>);</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span>(len &lt; <span class="number">0</span>)</span><br><span class="line">		die(<span class="string">&quot;Failed to read data from fd&quot;</span>);</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span>(write(req-&gt;sock, buf, len) != len)</span><br><span class="line">		die(<span class="string">&quot;Failed to send bytes to client&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">while</span> (len &gt; <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>至此，整个lab就完成了。</p>
+<p><img src="a.png" alt="img"></p>
+<p><em>lab的完整代码在<a target="_blank" rel="noopener" href="https://github.com/lllllv/6.828-labs">我的GitHub</a>中可以找到</em></p>
+<p>（完）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MIT-6-828/" rel="tag"># MIT 6.828</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/17/lab-4-Preemptive-Multitasking/" rel="prev" title="Lab 4: Preemptive Multitasking">
+      <i class="fa fa-chevron-left"></i> Lab 4: Preemptive Multitasking
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/23/Lab-5-File-system-Spawn-and-Shell/" rel="next" title="Lab 5: File system, Spawn and Shell">
+      Lab 5: File system, Spawn and Shell <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-A-Initialization-and-transmitting-packets"><span class="nav-number">1.</span> <span class="nav-text">Part A: Initialization and transmitting packets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-1"><span class="nav-number">1.1.</span> <span class="nav-text">Exercise 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-3"><span class="nav-number">1.2.</span> <span class="nav-text">Exercise 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-4"><span class="nav-number">1.3.</span> <span class="nav-text">Exercise 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-5"><span class="nav-number">1.4.</span> <span class="nav-text">Exercise 5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-6"><span class="nav-number">1.5.</span> <span class="nav-text">Exercise 6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-7"><span class="nav-number">1.6.</span> <span class="nav-text">Exercise 7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-8"><span class="nav-number">1.7.</span> <span class="nav-text">Exercise 8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Question"><span class="nav-number">1.8.</span> <span class="nav-text">Question</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-B-Receiving-packets-and-the-web-server"><span class="nav-number">2.</span> <span class="nav-text">Part B: Receiving packets and the web server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-10"><span class="nav-number">2.1.</span> <span class="nav-text">Exercise 10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-11"><span class="nav-number">2.2.</span> <span class="nav-text">Exercise 11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-12"><span class="nav-number">2.3.</span> <span class="nav-text">Exercise 12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Question-1"><span class="nav-number">2.4.</span> <span class="nav-text">Question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-13"><span class="nav-number">2.5.</span> <span class="nav-text">Exercise 13</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lv</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
