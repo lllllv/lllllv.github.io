@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/a.png">
 <meta property="og:image" content="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/b.png">
 <meta property="article:published_time" content="2021-07-01T07:10:21.000Z">
-<meta property="article:modified_time" content="2021-07-04T13:10:54.730Z">
+<meta property="article:modified_time" content="2021-07-04T13:13:43.780Z">
 <meta property="article:author" content="lv">
 <meta property="article:tag" content="计算理论 可计算性理论">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-04 21:10:54" itemprop="dateModified" datetime="2021-07-04T21:10:54+08:00">2021-07-04</time>
+                <time title="修改时间：2021-07-04 21:13:43" itemprop="dateModified" datetime="2021-07-04T21:13:43+08:00">2021-07-04</time>
               </span>
 
           
@@ -213,13 +213,13 @@
 <p>首先考虑这样一个问题：是否存在一台图灵机，它运行时会将它自己的描述打印到纸带上面，然后停机（可能以后会写关于图灵机编码的内容，不过现在就算不知道，也不影响～）。</p>
 <p>如果从常规思路考虑的话，肯定包含的一个打印的逻辑，打印（它自己），而这个<strong>它自己</strong>也需要包含那一个打印的逻辑，也就是“打印（它自己）”，层层套娃，它会是这样的：   打印（XXXXX 打印  （XXX打印 （XXX打印（X……….XX）XXXXXX）  XXX），显然这样是行不通的，我们需要换个角度考虑问题。</p>
 <p>既然一步直接取得程序本身的描述似乎有些难，那不如将这个想要得到的自打印图灵机分成两部分：$A$ 和 $B$，图灵机的 $A$ 部分打印 $B$ 部分的描述，然后 $B$ 部分打印出 $A$ 部分的描述。看起来还是个死循环：$A$ 依赖于 $B$ 的描述，而 $B$ 则需要 $A$ 的描述，不过还是有办法的。</p>
-<p>首先定义一个函数：<br>$$q:\Sigma^{&times;}\rightarrow\Sigma^{&times;}$$<br>也就是，输入任意串 $\omega$，$q$ 输出一个图灵机的描述，这个图灵机它在纸带上写下 $\omega$，然后停机。这个函数所做的事情非常简单，而且你可以使用一台图灵机模拟它。</p>
+<p>首先定义一个函数：<br>$$q:\Sigma^{*}\rightarrow\Sigma^{*}$$<br>也就是，输入任意串 $\omega$，$q$ 输出一个图灵机的描述，这个图灵机它在纸带上写下 $\omega$，然后停机。这个函数所做的事情非常简单，而且你可以使用一台图灵机模拟它。</p>
 <p>回到刚才的问题，如果我们有了 $B$ 的描述，那么就可以很轻松地定义$A$了：Print( $B$ 的描述)，很简单。</p>
 <p>接着考虑$B$，在$A$运行完之后，纸带上面留下了一个字符串，它就是 $B$ 的描述，简单起见用$&lt;B&gt;$来表示。那么，当$B$看到了停留在纸带上面的一个字符串：$&lt;B&gt;$时，它把这个字符串当作函数$q$的输入，那么，$q(&lt;B&gt;)$就是$A$的描述了！</p>
 <p>最后，$B$把两个子部分的描述$q(&lt;B&gt;)$和$&lt;B&gt;$组合起来，打印，然后停机，我们就得到了一个打印自己的图灵机！</p>
 <h2 id="递归定理"><a href="#递归定理" class="headerlink" title="递归定理"></a>递归定理</h2><hr>
 <p>其实，上面的自打印程序只是<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kleene%27s_recursion_theorem">递归定理</a>（recursion theorem）的一个应用。递归定理的完整表述形式是：</p>
-<p>设$T$是计算函数 $t:\Sigma^{*} \times \Sigma^{&times;} \rightarrow\Sigma^{&times;}$ 的一个图灵机，则存在计算函数 $r:\Sigma^{&times;}\rightarrow\Sigma^{&times;}$ 的一个图灵机R，使得对每一个 $\omega$ 都有 $r(\omega)=t(&lt;R&gt;, \omega)$</p>
+<p>设$T$是计算函数 $t:\Sigma^{*} \times \Sigma^{*} \rightarrow\Sigma^{*}$ 的一个图灵机，则存在计算函数 $r:\Sigma^{*}\rightarrow\Sigma^{*}$ 的一个图灵机R，使得对每一个 $\omega$ 都有 $r(\omega)=t(&lt;R&gt;, \omega)$</p>
 <p>乍一看让人不明觉厉，但其实说的是，你可以构造一个图灵机 $R$，它获取自己的描述，然后进行还可以进行任意一些计算。例如，自打印程序的“计算”就是把它的描述打印出来。递归定理的证明也非常类似，因此就简略说下：</p>
 <p>相应的图灵机可以这样构造：图灵机分成 $A$、$B$ 和 $C$ 三个部分，其中 $A$ 负责将$B$ 和 $C$ 的描述，即 $&lt;B&gt;&lt;C&gt;$打印出来，而 $B$ 负责的工作是，根据 $A$ 写在纸带上的内容，推导出其描述 $&lt;A&gt;$（也就是$q(&lt;B&gt;&lt;C&gt;)$），而 $C$ 就根据 $A$、$B$ 的输出内容（整个图灵机的描述）以及图灵机的输入 $\omega$ 计算即可。</p>
 <p>或许这样说有些不好理解，不过看完下面的实例就能明白了。</p>
