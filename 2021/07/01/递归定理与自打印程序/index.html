@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lllllv.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Quine程序，或者说自打印程序是一类打印自身源代码的程序。可能你已经见过很多不同语言版本的Quine程序，这类程序的存在似乎并不是偶然">
+<meta property="og:type" content="article">
+<meta property="og:title" content="递归定理与自打印程序">
+<meta property="og:url" content="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/index.html">
+<meta property="og:site_name" content="Lv的杂货铺">
+<meta property="og:description" content="Quine程序，或者说自打印程序是一类打印自身源代码的程序。可能你已经见过很多不同语言版本的Quine程序，这类程序的存在似乎并不是偶然">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/a.png">
+<meta property="og:image" content="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/b.png">
+<meta property="article:published_time" content="2021-07-01T07:10:21.000Z">
+<meta property="article:modified_time" content="2021-07-04T12:40:02.456Z">
+<meta property="article:author" content="lv">
+<meta property="article:tag" content="计算理论 可计算性理论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/a.png">
+
+<link rel="canonical" href="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>递归定理与自打印程序 | Lv的杂货铺</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lv的杂货铺</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们都是阴沟里的虫子，但总还是得有人仰望星空</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lllllv.github.io/2021/07/01/%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86%E4%B8%8E%E8%87%AA%E6%89%93%E5%8D%B0%E7%A8%8B%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lv">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lv的杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          递归定理与自打印程序
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-01 15:10:21" itemprop="dateCreated datePublished" datetime="2021-07-01T15:10:21+08:00">2021-07-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-04 20:40:02" itemprop="dateModified" datetime="2021-07-04T20:40:02+08:00">2021-07-04</time>
+              </span>
+
+          
+            <div class="post-description">Quine程序，或者说自打印程序是一类打印自身源代码的程序。可能你已经见过很多不同语言版本的Quine程序，这类程序的存在似乎并不是偶然</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一台打印自己描述的图灵机"><a href="#一台打印自己描述的图灵机" class="headerlink" title="一台打印自己描述的图灵机"></a>一台打印自己描述的图灵机</h2><hr>
+<p>首先考虑这样一个问题：是否存在一台图灵机，它运行时会将它自己的描述打印到纸带上面，然后停机（可能以后会写关于图灵机编码的内容，不过现在就算不知道，也不影响～）。</p>
+<p>如果从常规思路考虑的话，肯定包含的一个打印的逻辑，打印（它自己），而这个<strong>它自己</strong>也需要包含那一个打印的逻辑，也就是“打印（它自己）”，层层套娃，它会是这样的：   打印（XXXXX 打印  （XXX打印 （XXX打印（X……….XX）XXXXXX）  XXX），显然这样是行不通的，我们需要换个角度考虑问题。</p>
+<p>既然一步直接取得程序本身的描述似乎有些难，那不如将这个想要得到的自打印图灵机分成两部分：$A$ 和 $B$，图灵机的 $A$ 部分打印 $B$ 部分的描述，然后 $B$ 部分打印出 $A$ 部分的描述。看起来还是个死循环：$A$ 依赖于 $B$ 的描述，而 $B$ 则需要 $A$ 的描述，不过还是有办法的。</p>
+<p>首先定义一个函数：<br>$$q:\Sigma^{<em>}\rightarrow\Sigma^{</em>}$$<br>也就是，输入任意串 $\omega$，$q$ 输出一个图灵机的描述，这个图灵机它在纸带上写下 $\omega$，然后停机。这个函数所做的事情非常简单，而且你可以使用一台图灵机模拟它。</p>
+<p>回到刚才的问题，如果我们有了$B$的描述，那么就可以很轻松地定义$A$了：Print($B$的描述)，很简单。</p>
+<p>接着考虑$B$，在$A$运行完之后，纸带上面留下了一个字符串，它就是$B$的描述，简单起见用$<B>$来表示。那么，当$B$看到了停留在纸带上面的一个字符串：$<B>$时，它把这个字符串当作函数$q$的输入，那么，$q(<B>)$了就是$A$的描述了！</p>
+<p>最后，$B$把两个子部分的描述$q(<B>)$和$<B>$组合起来，打印，然后停机，我们就得到了一个打印自己的图灵机！</p>
+<h2 id="递归定理"><a href="#递归定理" class="headerlink" title="递归定理"></a>递归定理</h2><hr>
+<p>其实，上面的自打印程序只是<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kleene%27s_recursion_theorem">递归定理</a>（recursion theorem）的一个应用。递归定理的完整表述形式是：</p>
+<p>设$T$是计算函数 $t:\Sigma^{<em>} \times \Sigma^{</em>} \rightarrow\Sigma^{<em>}$ 的一个图灵机，则存在计算函数 $r:\Sigma^{</em>}\rightarrow\Sigma^{*}$ 的一个图灵机R，使得对每一个 $\omega$ 都有 $r(\omega)=t(<R>, \omega)$</p>
+<p>乍一看让人不明觉厉，但其实说的是，你可以构造一个图灵机 $R$，它获取自己的描述，然后进行还可以进行任意一些计算。例如，自打印程序的“计算”就是把它的描述打印出来。递归定理的证明也非常类似，因此就简略说下：</p>
+<p>相应的图灵机可以这样构造：图灵机分成 $A$、$B$ 和 $C$ 三个部分，其中 $A$ 负责将$B$ 和 $C$ 的描述，即 $<B><C>$打印出来，而 $B$ 负责的工作是，根据 $A$ 写在纸带上的内容，推导出其描述 $<A>$（也就是$q(<B><C>)$），而 $C$ 就根据 $A$、$B$ 的输出内容（整个图灵机的描述）以及图灵机的输入 $\omega$ 计算即可。</p>
+<p>或许这样说有些不好理解，不过看完下面的实例就能明白了。</p>
+<p>事实上，递归定理赋予了任何图灵完备语言的程序引用自身的能力，或者说，实现自引用词“这个”的能力。在设计程序时，大可以在伪代码中写上“获取自身的代码，并进行blablabla的计算”而不必担心无法实现（当然了，这里讨论的是计算理论中的可能性，而不考虑实际工程学中的种种限制）</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><hr>
+<p>根据递归定理，事实上存在着无数个这种程序，而且可以被任意一种图灵完备语言都可以构造出。网络上已经有了许许多多关于自打印程序（或者说，Quine）的例子，这些例子常常或多或少用到了其语言的一些特性，因此非常简洁；而我接下来将展示两个分别用python和C写的自打印程序，这两个例子非常<strong>不简洁</strong>：），但是它尽可能复刻了上一节递归定理的证明，并且尽我所能少的应用了具体的语言特性，所以，你可以随意在例子的后面添加你需要的程序，比如，上一节证明中的 $C$ ，然后在 $A$ 部分稍作修改，得到你想要的获取自身源代码并进行一些计算（例如，统计其中的单词数或者别的一些什么玩意儿）的程序。</p>
+<h3 id="python实例"><a href="#python实例" class="headerlink" title="python实例"></a>python实例</h3><p>首先是python中的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">t = <span class="string">&quot;tmp = chr(116) + chr(32) + chr(61) + chr(32) + chr(34)\nlst = t.split(chr(10))\nfor i in lst:\n    tmp = tmp + i\n    tmp = tmp + chr(92) + chr(110)\ntmp = tmp[:-2]\ntmp = tmp + chr(34)\nprint(tmp)\nprint(t, end=chr(10))\n\nWE_CAN_DO_OTHER_CACULATE1=1\nWE_CAN_DO_OTHER_CACULATE2=2&quot;</span></span><br><span class="line">tmp = chr(<span class="number">116</span>) + chr(<span class="number">32</span>) + chr(<span class="number">61</span>) + chr(<span class="number">32</span>) + chr(<span class="number">34</span>)</span><br><span class="line">lst = t.split(chr(<span class="number">10</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> lst:</span><br><span class="line">    tmp = tmp + i</span><br><span class="line">    tmp = tmp + chr(<span class="number">92</span>) + chr(<span class="number">110</span>)</span><br><span class="line">tmp = tmp[:<span class="number">-2</span>]</span><br><span class="line">tmp = tmp + chr(<span class="number">34</span>)</span><br><span class="line">print(tmp)</span><br><span class="line">print(t, end=chr(<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">WE_CAN_DO_OTHER_CACULATE1=<span class="number">1</span></span><br><span class="line">WE_CAN_DO_OTHER_CACULATE2=<span class="number">2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运行一下：</p>
+<p><img src="a.png" alt="img"></p>
+<p>可以看到，使用<code>diff</code>命令比较程序输出与程序源代码没有不同之处。</p>
+<p>其中，第一行的赋值语句t=XXXX就是前面例子中的 $A$ 了，它把 $B$ 和 $C$ 的描述（源代码）$<B><C>$ “打印”出来，然后是 $B$ ，它所做的是看“纸带”上 $A$ 打印出来的内容（读取变量<code>t</code>），然后推断出 $A$ 的描述，也就是计算$q(<B><C>)$，就是变量<code>tmp</code>，最后把两部分的内容，即整个程序的源代码交给 $C$ 进行一些“计算”。</p>
+<p>值得注意的是， $A$ 的内容是<strong>一整行</strong>，因此特别长；此外， $B$ 和 $C$ 的部分（或者说第一行往下的部分），不能有双引号“d的出现，因为如果下边出现了，那么第一行的字符串中就必须要有&quot;的转义符的出现，否则解释器就要报错了，然而如果上面有转义符了，跟下面就不一样了，就不能正确打印 $B$ 和 $C$ 的描述了，而要进行修改的话，逻辑就会更加复杂，所以为了简单起见直接 $B$ 和 $C$ 的部分的所有双引号都用<code>chr(34)</code>代替。还有一点小技巧，就是，python中<code>print</code>默认最后会添加一个换行符，常规情况下去掉它需要用<code>end=&quot;&quot;</code>来明确指出不需要换行符，既然不能使用双引号，那就造一个一字节的字符串，然后切掉它的第一个字符，就是一个空字符串了（我也想过直接用<code>None</code>，但还是不行）</p>
+<p>或许不用我说就能明白，函数$q()$对应的就是第一行之下，<code>print</code>语句之上的内容，它查看“纸带” 上 $A$ 打印出来的内容（变量<code>t</code>的内容），然后将它还原成原本的那条赋值语句<code>t = XXXXXX</code>，只不过是在不使用双引号的条件下完成的，所以略显麻烦。</p>
+<p>如果想要进行别的一些计算的话，把最下面的<code>WE_CAN_DO_OTHER_CACULATE</code>两句换成想要计算的程序，然后把除第一行的内容外的代码全部复制，替换掉原第一行右边的内容，然后添加些换行符即可。</p>
+<h3 id="C实例"><a href="#C实例" class="headerlink" title="C实例"></a>C实例</h3><p>C语言的实例也是基本遵照递归定理证明来实行的，因此特别长，这里就不放出来了，直接看<a target="_blank" rel="noopener" href="https://github.com/lllllv/Quine/blob/main/main.c">这个链接</a>就好了。道理也是一样的，所以也完全可以添加自己的代码，然后把<code>char t[4000] = XXXX</code>那一行一下的内容全部复制，然后替换那一行右边的赋值就行啦！</p>
+<p>需要注意的是，t,tmp,cp 三个数组的大小只有4000，如果添加的代码太多的话空间会不够，手动调到需要的大小就行了，另外，如果需要非常大空间的话，使用<code>malloc()</code>来动态分配也是完全可以的，就是会稍微麻烦一点（也不太麻烦），不过我懒，就没有采用动态分配233333</p>
+<p>看一下这个的运行结果：</p>
+<p><img src="b.png" alt="img"></p>
+<p>可以看到，使用<code>diff</code>比较，输出的内容与源代码还是一致的。</p>
+<p>（完）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E7%90%86%E8%AE%BA-%E5%8F%AF%E8%AE%A1%E7%AE%97%E6%80%A7%E7%90%86%E8%AE%BA/" rel="tag"># 计算理论 可计算性理论</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/24/Lab-6-Networking/" rel="prev" title="Lab 6: Networking">
+      <i class="fa fa-chevron-left"></i> Lab 6: Networking
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%8F%B0%E6%89%93%E5%8D%B0%E8%87%AA%E5%B7%B1%E6%8F%8F%E8%BF%B0%E7%9A%84%E5%9B%BE%E7%81%B5%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">一台打印自己描述的图灵机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E5%AE%9A%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">递归定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">python实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.2.</span> <span class="nav-text">C实例</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lv</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
