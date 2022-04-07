@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lllllv.github.io/2020/10/29/lab2-Memory-Management/a.png">
 <meta property="article:published_time" content="2020-10-29T02:39:39.000Z">
-<meta property="article:modified_time" content="2021-02-27T09:44:26.935Z">
+<meta property="article:modified_time" content="2022-04-01T13:33:41.700Z">
 <meta property="article:author" content="lv">
 <meta property="article:tag" content="MIT 6.828">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-27 17:44:26" itemprop="dateModified" datetime="2021-02-27T17:44:26+08:00">2021-02-27</time>
+                <time title="修改时间：2022-04-01 21:33:41" itemprop="dateModified" datetime="2022-04-01T21:33:41+08:00">2022-04-01</time>
               </span>
 
           
@@ -209,6 +209,7 @@
 
       
         <h2 id="Part-1-Physical-Page-Management"><a href="#Part-1-Physical-Page-Management" class="headerlink" title="Part 1: Physical Page Management"></a>Part 1: Physical Page Management</h2><p>该部分要求完成一个简单的物理页分配器，它通过维持一个链表持续追踪每一个可用的物理页。</p>
+<p>值得注意的是，在init.c的<code>i386_init</code>函数中，首先声明了<code>extern char edata[], end[]</code>，其中<code>edata</code>和<code>end</code>是定义在链接脚本kernel.ld中的，分别代表了内核的ELF文件的.data段和.bss段的地址。而它们之间的部分就是.bss段，在被装载到内存后，其相应部分应当全部置0，也就是<code>i386_init</code>函数前两句所做的事情。在内核镜像.bss段之后便无内容了，所以，在pmap.c的<code>boot_alloc</code>函数的开头，将<code>nextfree</code>初始化为<code>end</code>之后的第一个4k对齐的地址，就是实际的内存中，空闲的地址的起点。</p>
 <h3 id="Exercise-1"><a href="#Exercise-1" class="headerlink" title="Exercise 1"></a>Exercise 1</h3><p>exercise 1要求补全代码，除此之外基本上没有说明，需要自己阅读相关代码来明白程序的含义。</p>
 <p>首先是<code>boot_alloc()</code>。该函数用于分配一些连续的物理页，需要的空间大小由参数给出。注意到，函数中一个重要的变量是<code>static char *nextfree</code>，它指向下一个可用的页。它在内核被装载到内存中的时候被初始化为0（static），然后在这个函数首次运行的时候被初始化为虚拟内存空间中紧接着内核之后的那个空闲地址（当然，它是4k对齐的）。同时，由于它是static类型的，每次函数运行之后，它的值被更新，然后在下次被调用，再次被更新，以此类推…</p>
 <p>函数要求分配一些物理页，乍一看这个“分配”无从下手，因为现在既没有页表也没有什么别的帮助函数，但是回想一下，在lab1中，我们知道在进入内核入口点的时候已经加载了一个临时的页目录表<code>entry_pgdir</code>，它将0xf0000000 ~ 0xf0400000之间的地址直接映射到物理地址0x00000000 ~ 0x00400000，而现在<code>next_free</code>指向虚拟地址空间中内核后面的空闲地址，那么它指向的内容也会被直接映射到物理地址中（只要没超过0xf0400000）。那么，这个“分配”就只要返回一个虚拟地址就行了，映射的事情是不必管的。</p>
@@ -353,7 +354,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
