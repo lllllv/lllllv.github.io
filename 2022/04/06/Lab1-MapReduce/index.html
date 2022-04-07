@@ -20,18 +20,19 @@
     var CONFIG = {"hostname":"lllllv.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Lab 1需要我们实现一个简易版的MapReduce库，实现一个单机版的MapReduce(不同于论文中运行于集群)。需要完成的是mr&#x2F;master.go，mr&#x2F;worker.go和mr&#x2F;rpc.go的相应部分。 MapReduce的原论文可以从这里获取。它的思想来源于函数式编程中的map和reduce过程，其主要流程如图所示：  系统由一个Master和多个Worker(map&#x2F;reduce任务">
+  <meta name="description" content="MIT 6.824 Lab1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lab1:MapReduce">
 <meta property="og:url" content="https://lllllv.github.io/2022/04/06/Lab1-MapReduce/index.html">
 <meta property="og:site_name" content="Lv的杂货铺">
-<meta property="og:description" content="Lab 1需要我们实现一个简易版的MapReduce库，实现一个单机版的MapReduce(不同于论文中运行于集群)。需要完成的是mr&#x2F;master.go，mr&#x2F;worker.go和mr&#x2F;rpc.go的相应部分。 MapReduce的原论文可以从这里获取。它的思想来源于函数式编程中的map和reduce过程，其主要流程如图所示：  系统由一个Master和多个Worker(map&#x2F;reduce任务">
+<meta property="og:description" content="MIT 6.824 Lab1">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lllllv.github.io/2022/04/06/Lab1-MapReduce/a.png">
 <meta property="og:image" content="https://lllllv.github.io/2022/04/06/Lab1-MapReduce/b.png">
 <meta property="article:published_time" content="2022-04-06T07:51:47.000Z">
-<meta property="article:modified_time" content="2022-04-07T10:05:18.000Z">
+<meta property="article:modified_time" content="2022-04-07T10:08:12.278Z">
 <meta property="article:author" content="lv">
+<meta property="article:tag" content="MIT 6.824">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lllllv.github.io/2022/04/06/Lab1-MapReduce/a.png">
 
@@ -193,10 +194,11 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-07 18:05:18" itemprop="dateModified" datetime="2022-04-07T18:05:18+08:00">2022-04-07</time>
+                <time title="修改时间：2022-04-07 18:08:12" itemprop="dateModified" datetime="2022-04-07T18:08:12+08:00">2022-04-07</time>
               </span>
 
           
+            <div class="post-description">MIT 6.824 Lab1</div>
 
         </div>
       </header>
@@ -246,6 +248,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MIT-6-824/" rel="tag"># MIT 6.824</a>
+          </div>
 
         
 
@@ -335,7 +340,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
